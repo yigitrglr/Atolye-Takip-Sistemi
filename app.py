@@ -37,10 +37,10 @@ def detayli_kayitlari_oku():
         
         return df
     except FileNotFoundError:
-        print("Excel file not found. Returning empty DataFrame.")
+        print("Excel dosyası bulunamadı. Boş DataFrame.")
         return pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
     except Exception as e:
-        print(f"Error reading Excel file: {e}")
+        print(f"Excel dosyasını okurken bir sorun oluştu: {e}")
         return pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
 
 def detayli_kayit_ekle(isim, giris=None, cikis=None, sure=None):
@@ -85,7 +85,7 @@ def giris_yap():
 
     df = detayli_kayitlari_oku()
 
-    # todo düzel burayı herkes istediği kadar sayıda olsun
+    # todo düzelt burayı herkes istediği kadar sayıda olsun
     if df[df['İsim'] == isim].empty:
         simdi = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         detayli_kayit_ekle(isim, giris=simdi)
