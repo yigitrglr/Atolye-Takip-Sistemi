@@ -31,9 +31,9 @@ def detayli_kayitlari_oku():
         df.columns = df.columns.str.strip()
 
         if 'Giriş Zamanı' in df.columns and not df['Giriş Zamanı'].isnull().all():
-            df['Giriş Zamanı'] = pd.to_datetime(df['Giriş Zamanı'], errors='coerce').dt.strftime("%Y-%m-%d %H:%M:%S")
+            df['Giriş Zamanı'] = pd.to_datetime(df['Giriş Zamanı'], errors='coerce').dt.strftime("%d-%m-%Y %H:%M:%S")
         if 'Çıkış Zamanı' in df.columns and not df['Çıkış Zamanı'].isnull().all():
-            df['Çıkış Zamanı'] = pd.to_datetime(df['Çıkış Zamanı'], errors='coerce').dt.strftime("%Y-%m-%d %H:%M:%S")
+            df['Çıkış Zamanı'] = pd.to_datetime(df['Çıkış Zamanı'], errors='coerce').dt.strftime("%d-%m-%Y %H:%M:%S")
         
         return df
     except FileNotFoundError:
@@ -87,13 +87,13 @@ def giris_yap():
 
     # todo düzel burayı herkes istediği kadar sayıda olsun
     if df[df['İsim'] == isim].empty:
-        simdi = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        simdi = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         detayli_kayit_ekle(isim, giris=simdi)
         flash("Giriş işlemi başarılı.")
     else:
         index = df[df['İsim'] == isim].index[0]
         if pd.isna(df.at[index, 'Giriş Zamanı']):
-            simdi = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            simdi = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             detayli_kayit_ekle(isim, giris=simdi)
             flash("Giriş işlemi başarılı.")
         else:
@@ -114,7 +114,7 @@ def cikis_yap():
         if pd.notna(df.at[index, 'Giriş Zamanı']):
             if pd.isna(df.at[index, 'Çıkış Zamanı']):
                 # süreyi hesaplama
-                giris_zamani = datetime.strptime(df.at[index, 'Giriş Zamanı'], "%Y-%m-%d %H:%M:%S")
+                giris_zamani = datetime.strptime(df.at[index, 'Giriş Zamanı'], "%d-%m-%Y %H:%M:%S")
                 cikis_zamani = datetime.now()
                 sure = cikis_zamani - giris_zamani
 
