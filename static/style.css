@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f9;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    margin: 20px auto;
+    text-align: center;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Rounded corners */
+    overflow: hidden;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px; /* Rounded cell corners */
+}
+
+table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+table th:first-child {
+    border-top-left-radius: 15px;
+}
+
+table th:last-child {
+    border-top-right-radius: 15px;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: initial; /* Maintain default color */
+    color: initial; /* Maintain default text color */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: none; /* Remove general button shadow */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.giris-buton {
+    background-color: #28a745; /* Green */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.giris-buton:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+.giris-buton:hover:not(:disabled) {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.cikis-buton {
+    background-color: #dc3545; /* Red */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cikis-buton:disabled {
+    background-color: #f5b5b7;
+    cursor: not-allowed;
+}
+
+.cikis-buton:hover:not(:disabled) {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.flash-message {
+    background-color: #f8d7da; /* Reddish background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Light red border */
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+    form input[type="text"] {
+        width: 90%;
+    }
+    button, .giris-buton, .cikis-buton {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #f4f4f9;
+}
+
+body.dark-mode table {
+    background-color: #444;
+    color: #ddd;
+}
+
+body.dark-mode .giris-buton {
+    background-color: #006400;
+}
+
+body.dark-mode .cikis-buton {
+    background-color: #8B0000;
+}

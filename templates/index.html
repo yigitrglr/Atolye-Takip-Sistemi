@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atölye Takip Sistemi</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Atölye Giriş-Çıkış Sistemi</h1>
+    </header>
+
+    <main>
+        <!-- Yeni Kişi Ekleme Formu -->
+        <section class="form-section">
+            <h2>Yeni Kişi Ekle</h2>
+            <form action="/giris" method="POST" class="form-inline">
+                <input 
+                    type="text" 
+                    name="isim" 
+                    placeholder="İsim giriniz" 
+                    required 
+                    class="input-field" 
+                    aria-label="Yeni kişi ismi">
+                <button type="submit" class="submit-button">Ekle</button>
+            </form>
+        </section>
+
+        <!-- Debug Information -->
+        <section class="debug-section">
+            <h2>Debug Bilgisi</h2>
+            <p>Kayıtlı kişi sayısı: {{ kisiler | length }}</p>
+        </section>
+
+        <!-- Kayıtlı Kişiler Tablosu -->
+        {% if kisiler and kisiler | length > 0 %}
+            <section class="table-section">
+                <h2>Son Giriş ve Çıkış Bilgileri</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>İsim</th>
+                            <th>Giriş Zamanı</th>
+                            <th>Çıkış Zamanı</th>
+                            <th>Süre</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kisi in kisiler %}
+                            <tr>
+                                <td>{{ kisi.get('İsim', 'Veri yok') }}</td>
+                                <td>{{ kisi.get('Giriş Zamanı', 'Veri yok') }}</td>
+                                <td>{{ kisi.get('Çıkış Zamanı', 'Veri yok') }}</td>
+                                <td>{{ kisi.get('Süre', 'Veri yok') }}</td>
+                                <td class="action-buttons">
+                                    <!-- Giriş Butonu -->
+                                    <form method="POST" action="/giris" class="action-form">
+                                        <input type="hidden" name="isim" value="{{ kisi['İsim'] }}">
+                                        <button class="giris-buton" type="submit">Giriş Yap</button>
+                                    </form>
+
+                                    <!-- Çıkış Butonu -->
+                                    <form method="POST" action="/cikis" class="action-form">
+                                        <input type="hidden" name="isim" value="{{ kisi['İsim'] }}">
+                                        <button class="cikis-buton" type="submit">Çıkış Yap</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% else %}
+            <section class="no-data-section">
+                <h2>Son Giriş ve Çıkış Bilgileri</h2>
+                <p>Henüz kayıtlı kişi yok.</p>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
