@@ -71,6 +71,9 @@ def index():
     # template e atma
     return render_template("index.html", kisiler=kisiler)
 
+# log/debug aynı şey silersin sonra
+@app.route('/log')
+
 @app.route('/debug')
 def debug_view():
     df = detayli_kayitlari_oku()
