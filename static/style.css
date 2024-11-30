@@ -18,7 +18,7 @@ form input[type="text"] {
     padding: 10px;
     width: 300px;
     border: 1px solid #ccc;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px; /* yuvarlaklaştırma */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -27,7 +27,7 @@ form button {
     background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px; /* yuvarlaklaştırma */
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
     transition: background-color 0.3s, transform 0.2s;
@@ -44,7 +44,7 @@ table {
     border-collapse: collapse;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px; /* Rounded corners */
+    border-radius: 15px; /* yuvarlaklaştırma */
     overflow: hidden;
 }
 
@@ -52,7 +52,7 @@ table th, table td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
-    border-radius: 5px; /* Rounded cell corners */
+    border-radius: 5px; /* yuvarlaklaştırma */
 }
 
 table th {
@@ -78,17 +78,17 @@ table tr:hover {
 
 button {
     padding: 5px 10px;
-    background-color: initial; /* Maintain default color */
-    color: initial; /* Maintain default text color */
+    background-color: initial; /* default tutma */
+    color: initial; /* default tutma */
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: none; /* Remove general button shadow */
+    box-shadow: none; /* shadow kaldırma sonra ekleriz belki */
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .giris-buton {
-    background-color: #28a745; /* Green */
+    background-color: #28a745; /* Yeşil */
     color: white;
     padding: 8px 16px;
     border: none;
@@ -109,7 +109,7 @@ button {
 }
 
 .cikis-buton {
-    background-color: #dc3545; /* Red */
+    background-color: #dc3545; /* Kırmızı */
     color: white;
     padding: 8px 16px;
     border: none;
@@ -130,9 +130,9 @@ button {
 }
 
 .flash-message {
-    background-color: #f8d7da; /* Reddish background */
-    color: #721c24; /* Dark red text */
-    border: 1px solid #f5c6cb; /* Light red border */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
     padding: 10px;
     margin: 10px auto;
     width: 80%;

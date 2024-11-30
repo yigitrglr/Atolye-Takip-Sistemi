@@ -4,22 +4,20 @@ import pandas as pd
 import os
 import secrets
 
-# Flask app configuration
+
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(32)  # More secure method for production
+app.secret_key = secrets.token_hex(32)
 
 DETAYLI_KAYIT_DOSYASI = "kayitlar.xlsx"
 
-# Create the Excel file if it doesn't exist
 def excel_dosyasi_olustur():
     if not os.path.exists(DETAYLI_KAYIT_DOSYASI):
         detayli_kayit_df = pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
         detayli_kayit_df.to_excel(DETAYLI_KAYIT_DOSYASI, index=False, engine='openpyxl')
 
-# Ensure the Excel file exists at startup
+
 excel_dosyasi_olustur()
 
-# Function to write records to the Excel file
 def kayitlari_excele_yaz(df):
     try:
         df.to_excel(DETAYLI_KAYIT_DOSYASI, index=False, engine='openpyxl')
@@ -27,14 +25,11 @@ def kayitlari_excele_yaz(df):
         print(f"Veri kaydedilirken bir hata oluştu: {e}")
         flash("Veri kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.")
 
-# Function to read records from the Excel file
 def detayli_kayitlari_oku():
     try:
-        # Read the Excel file and ensure that only necessary columns are read
         df = pd.read_excel(DETAYLI_KAYIT_DOSYASI, engine='openpyxl', usecols=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
-        df.columns = df.columns.str.strip()  # Clean up column names to avoid extra spaces
+        df.columns = df.columns.str.strip()
 
-        # Convert columns to datetime if applicable and ensure proper formatting
         if 'Giriş Zamanı' in df.columns and not df['Giriş Zamanı'].isnull().all():
             df['Giriş Zamanı'] = pd.to_datetime(df['Giriş Zamanı'], errors='coerce').dt.strftime("%Y-%m-%d %H:%M:%S")
         if 'Çıkış Zamanı' in df.columns and not df['Çıkış Zamanı'].isnull().all():
@@ -42,15 +37,12 @@ def detayli_kayitlari_oku():
         
         return df
     except FileNotFoundError:
-        # Return an empty DataFrame with the appropriate columns if the file doesn't exist
         print("Excel file not found. Returning empty DataFrame.")
         return pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
     except Exception as e:
-        # Catch any other exceptions and display the error
         print(f"Error reading Excel file: {e}")
         return pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
 
-# Function to add or update a record
 def detayli_kayit_ekle(isim, giris=None, cikis=None, sure=None):
     df = detayli_kayitlari_oku()
     
@@ -70,13 +62,13 @@ def detayli_kayit_ekle(isim, giris=None, cikis=None, sure=None):
 
 @app.route("/")
 def index():
-    # Read data from the Excel file
+    # excelden okuma
     df = detayli_kayitlari_oku()
     
-    # Fill missing values with None and convert DataFrame to a list of dictionaries
+    # boş verileri none yapıp dict çevirme
     kisiler = df.to_dict(orient='records')
     
-    # Pass the processed data to the template
+    # template e atma
     return render_template("index.html", kisiler=kisiler)
 
 @app.route('/debug')
@@ -93,7 +85,7 @@ def giris_yap():
 
     df = detayli_kayitlari_oku()
 
-    # Check if the user has an entry already
+    # todo düzel burayı herkes istediği kadar sayıda olsun
     if df[df['İsim'] == isim].empty:
         simdi = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         detayli_kayit_ekle(isim, giris=simdi)
@@ -121,7 +113,7 @@ def cikis_yap():
         index = df[df['İsim'] == isim].index[0]
         if pd.notna(df.at[index, 'Giriş Zamanı']):
             if pd.isna(df.at[index, 'Çıkış Zamanı']):
-                # Calculate the duration
+                # süreyi hesaplama
                 giris_zamani = datetime.strptime(df.at[index, 'Giriş Zamanı'], "%Y-%m-%d %H:%M:%S")
                 cikis_zamani = datetime.now()
                 sure = cikis_zamani - giris_zamani
