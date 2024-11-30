@@ -120,7 +120,7 @@ def cikis_yap():
 
                 detayli_kayit_ekle(
                     isim, 
-                    cikis=cikis_zamani.strftime("%Y-%m-%d %H:%M:%S"), 
+                    cikis=cikis_zamani.strftime("%d-%m-%Y %H:%M:%S"), 
                     sure=str(sure).split('.')[0]
                 )
                 flash(f"{isim} için çıkış işlemi başarılı.")
