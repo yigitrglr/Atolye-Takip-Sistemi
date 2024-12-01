@@ -15,7 +15,6 @@ def excel_dosyasi_olustur():
         detayli_kayit_df = pd.DataFrame(columns=["İsim", "Giriş Zamanı", "Çıkış Zamanı", "Süre"])
         detayli_kayit_df.to_excel(DETAYLI_KAYIT_DOSYASI, index=False, engine='openpyxl')
 
-
 excel_dosyasi_olustur()
 
 def kayitlari_excele_yaz(df):
