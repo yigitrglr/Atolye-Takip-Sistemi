@@ -146,6 +146,10 @@ body.dark-mode {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 {
+    color: #ddd; /* Light color for headings in dark mode */
+}
+
 body.dark-mode table {
     background-color: #222;
     color: #ccc;
