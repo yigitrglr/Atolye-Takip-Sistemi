@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atölye Takip Sistemi</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggleButton = document.createElement("button");
+            toggleButton.innerText = "Koyu Mod (WIP)";
+            toggleButton.classList.add("dark-mode-toggle");
+    
+            document.body.appendChild(toggleButton);
+    
+            toggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+                const isDarkMode = document.body.classList.contains("dark-mode");
+                localStorage.setItem("dark-mode", isDarkMode ? "enabled" : "disabled");
+            });
+    
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -27,11 +46,11 @@
             </form>
         </section>
 
-        <!-- Debug Bilgisi -->
+        <!-- Debug Bilgisi 
         <section class="debug-section">
             <h2>Debug Bilgisi</h2>
             <p>Kayıtlı kişi sayısı: {{ kisiler | length }}</p>
-        </section>
+        </section> -->
 
         <!-- Kayıtlı Kişiler Tablosu -->
         {% if kisiler and kisiler | length > 0 %}
@@ -40,6 +59,7 @@
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th>UUID</th>
                             <th>İsim</th>
                             <th>Giriş Zamanı</th>
                             <th>Çıkış Zamanı</th>
@@ -50,6 +70,7 @@
                     <tbody>
                         {% for kisi in kisiler %}
                             <tr>
+                                <td>{{ kisi.get('UUID', 'Veri yok') }}</td>
                                 <td>{{ kisi.get('İsim', 'Veri yok') }}</td>
                                 <td>{{ kisi.get('Giriş Zamanı', 'Veri yok') }}</td>
                                 <td>{{ kisi.get('Çıkış Zamanı', 'Veri yok') }}</td>
@@ -58,12 +79,14 @@
                                     <!-- Giriş Butonu -->
                                     <form method="POST" action="/giris" class="action-form">
                                         <input type="hidden" name="isim" value="{{ kisi['İsim'] }}">
+                                        <input type="hidden" name="uuid" value="{{ kisi['UUID'] }}">
                                         <button class="giris-buton" type="submit">Giriş Yap</button>
                                     </form>
 
                                     <!-- Çıkış Butonu -->
                                     <form method="POST" action="/cikis" class="action-form">
                                         <input type="hidden" name="isim" value="{{ kisi['İsim'] }}">
+                                        <input type="hidden" name="uuid" value="{{ kisi['UUID'] }}">
                                         <button class="cikis-buton" type="submit">Çıkış Yap</button>
                                     </form>
                                 </td>
