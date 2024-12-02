@@ -21,6 +21,7 @@ Atölyenizde giriş-çıkışları takip edebileceğiniz bir sistem.
 
 ### Uygulamayı Çalıştırma
 <br>
-#### Uygulama dizininde </br>
+
+#### Uygulama dizininde
 
 ```python app.py```
