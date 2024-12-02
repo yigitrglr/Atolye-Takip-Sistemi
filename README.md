@@ -7,20 +7,10 @@ Atölyenizde giriş-çıkışları takip edebileceğiniz bir sistem.
 * Python 3.12 veya daha üst bir sürüm
 * ```pip``` paket yöneticisi
 
-#### openpyxl flask datetime pandas secrets kütüphaneleri
+### openpyxl flask datetime pandas secrets kütüphaneleri
 
-```pip install openpyxl```
-
-```pip install flask```
-
-```pip install datetime```
-
-```pip install pandas```
-
-```pip install secrets```
+```pip install openpyxl flask datetime pandas secrets```
 
 ### Uygulamayı Çalıştırma
-<br>
-
 
 ```python app.py```
