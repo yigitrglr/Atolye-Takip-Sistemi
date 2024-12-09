@@ -19,20 +19,20 @@ excel_dosyasi_olustur()
 
 def dosyalari_okuma():
     try:
-        dfKayit = pd.read_excel(DETAYLI_KAYIT_DOSYASI, engine='openpyxl')
-        return dfKayit
+        dfkayit = pd.read_excel(DETAYLI_KAYIT_DOSYASI, engine='openpyxl')
+        return dfkayit
     except Exception as e:
         flash(f"Dosya okunurken bir hata oluştu: {e}")
         return pd.DataFrame()
 
-def kayitlari_excele_yaz(dfKayit):
+def kayitlari_excele_yaz(dfkayit):
     try:
-        dfKayit.to_excel(DETAYLI_KAYIT_DOSYASI, index=False, engine='openpyxl')
+        dfkayit.to_excel(DETAYLI_KAYIT_DOSYASI, index=False, engine='openpyxl')
     except Exception as e:
         flash(f"Veri kaydedilirken bir hata oluştu: {e}")
 
 def detayli_kayit_ekle(isim, giris=None, cikis=None, sure=None):
-    dfKayit = dosyalari_okuma()
+    dfkayit = dosyalari_okuma()
     yeni_id = secrets.token_hex(8)
     yeni_kayit = {
         "UUID": yeni_id,
@@ -41,13 +41,13 @@ def detayli_kayit_ekle(isim, giris=None, cikis=None, sure=None):
         "Çıkış Zamanı": cikis,
         "Süre": sure,
     }
-    dfKayit = pd.concat([dfKayit, pd.DataFrame([yeni_kayit])], ignore_index=True)
-    kayitlari_excele_yaz(dfKayit)
+    dfkayit = pd.concat([dfkayit, pd.DataFrame([yeni_kayit])], ignore_index=True)
+    kayitlari_excele_yaz(dfkayit)
 
 @app.route("/")
 def index():
-    dfKayit = dosyalari_okuma()
-    kisiler = dfKayit.fillna('').to_dict(orient='records')
+    dfkayit = dosyalari_okuma()
+    kisiler = dfkayit.fillna('').to_dict(orient='records')
     return render_template("index.html", kisiler=kisiler)
 
 @app.route('/giris', methods=['POST'])
@@ -71,21 +71,21 @@ def cikis_yap():
         flash("İsim veya UUID boş olamaz.")
         return redirect(url_for('index'))
 
-    dfKayit = dosyalari_okuma()
+    dfkayit = dosyalari_okuma()
 
-    user_record = dfKayit[dfKayit['UUID'] == uuid]
+    user_record = dfkayit[dfkayit['UUID'] == uuid]
 
     if not user_record.empty:
         index = user_record.index[0]
-        if pd.notna(dfKayit.at[index, 'Giriş Zamanı']) and pd.isna(dfKayit.at[index, 'Çıkış Zamanı']):
-            giris_zamani = datetime.strptime(dfKayit.at[index, 'Giriş Zamanı'], "%d-%m-%Y %H:%M:%S")
+        if pd.notna(dfkayit.at[index, 'Giriş Zamanı']) and pd.isna(dfkayit.at[index, 'Çıkış Zamanı']):
+            giris_zamani = datetime.strptime(dfkayit.at[index, 'Giriş Zamanı'], "%d-%m-%Y %H:%M:%S")
             cikis_zamani = datetime.now()
             sure = cikis_zamani - giris_zamani
 
-            dfKayit.at[index, 'Çıkış Zamanı'] = cikis_zamani.strftime("%d-%m-%Y %H:%M:%S")
-            dfKayit.at[index, 'Süre'] = str(sure).split('.')[0]
+            dfkayit.at[index, 'Çıkış Zamanı'] = cikis_zamani.strftime("%d-%m-%Y %H:%M:%S")
+            dfkayit.at[index, 'Süre'] = str(sure).split('.')[0]
 
-            kayitlari_excele_yaz(dfKayit=dfKayit)
+            kayitlari_excele_yaz(dfkayit=dfkayit)
             flash(f"{isim} için çıkış işlemi başarılı.")
         else:
             flash(f"{isim} zaten çıkış yaptı veya giriş kaydı bulunmuyor.")
